@@ -1,85 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace caAdventOfCode.Day1
 {
     public class SecretEntrancePartOne
     {
-        int password = 0;
-        int dial = 50;
-        private List<string> inputs = new List<string>();
+        private int _password;
+        private int _dial = 50;
+        private readonly List<string> _inputs = new List<string>();
+        //public int Password => _password;
+        private bool useTestData = false;
         public SecretEntrancePartOne()
         {
-            //GetInputs();
-            GetData();
-            SolvePassword();
-            Console.WriteLine($"Password is {password}");
+            LoadData();
+            CalculatePassword();
+            Console.WriteLine($"Password is {_password}");
         }
 
-        private void SolvePassword()
+        private void LoadData()
         {
-            foreach (var input in inputs)
+            if (useTestData)
             {
-                char direction = input[0];
-                int steps = int.Parse(input.Substring(1));
+                var data = @"L68
+                            L30
+                            R48
+                            L5
+                            R60
+                            L55
+                            L1
+                            L99
+                            R14
+                            L82
+                            R764";
 
-                if (direction == 'L')
-                {               
-                    dial -= steps;                    
-                }
-                else if (direction == 'R')
+                using (var reader = new StringReader(data))
                 {
-                    dial += steps;
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            _inputs.Add(line.Trim());
+                        }
+                    }
                 }
-
-                if (dial < 0)
-                {
-                    dial += 10000;
-                }
-                dial = dial % 100;
-
-                if (dial == 0)
-                {
-                    password += 1;
-                }                
+                return;
             }
-        }
 
-        private void GetInputs()
-        {
-            using (StringReader reader = new StringReader(GetTestData()))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    inputs.Add(line.Trim());
-                }
-            }
-        }
-
-        private string GetTestData()
-        {
-            return @"L68
-                    L30
-                    R48
-                    L5
-                    R60
-                    L55
-                    L1
-                    L99
-                    R14
-                    L82
-                    R764";
-        }
-
-        private void GetData()
-        {
             try
             {
                 var localPath = @"C:\Users\40124401\source\repos\AleksandrT\AdvemtOfCode2025\caAdventOfCode\Data\InputsDay1Part1.txt";
@@ -87,61 +55,52 @@ namespace caAdventOfCode.Day1
                 {
                     foreach (var line in File.ReadAllLines(localPath))
                     {
-                        if (!string.IsNullOrWhiteSpace(line)) inputs.Add(line.Trim());
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            _inputs.Add(line.Trim());
+                        }
                     }
+
                     return;
                 }
-                else
-                {
-                    Console.WriteLine("File not found!");
-                }
+                Console.WriteLine("File not found!");
             }
             catch
             {
-                Console.WriteLine("File found, but wanst able to read it!");
+                Console.WriteLine("File found, but wasn't able to read it!");
             }
+        }
 
-            // Attempt to download from Advent of Code using optional session cookie in env var AOC_SESSION
-            //try
-            //{
-            //    var url = "https://adventofcode.com/2025/day/1/input";
+        private void CalculatePassword()
+        {
+            foreach (var input in _inputs)
+            {
+                if (string.IsNullOrEmpty(input)) continue;
 
-            //    using (var client = new HttpClient())
-            //    {
-            //        var session = Environment.GetEnvironmentVariable("AOC_SESSION");
+                var direction = input[0];
+                if (!int.TryParse(input.Substring(1), out var steps)) continue;
 
-            //        if (!string.IsNullOrEmpty(session))
-            //        {
-            //            client.DefaultRequestHeaders.Add("Cookie", $"session={session}");
-            //        }
+                if (direction == 'L')
+                {
+                    _dial -= steps;
+                }
+                else if (direction == 'R')
+                {
+                    _dial += steps;
+                }
 
-            //        var content = client.GetStringAsync(url).GetAwaiter().GetResult();
+                if (_dial < 0)
+                {
+                    _dial += 10000;
+                }
 
-            //        using (var reader = new StringReader(content))
-            //        {
-            //            string line;
-            //            while ((line = reader.ReadLine()) != null)
-            //            {
-            //                if (!string.IsNullOrWhiteSpace(line)) inputs.Add(line.Trim());
-            //            }
-            //        }
-            //        return;
-            //    }
-            //}
-            //catch
-            //{
-            //    // ignore network errors and fall back to test data
-            //}
+                _dial %= 100;
 
-            // Fallback to embedded test data
-            //using (StringReader reader = new StringReader(GetTestData()))
-            //{
-            //    string line;
-            //    while ((line = reader.ReadLine()) != null)
-            //    {
-            //        if (!string.IsNullOrWhiteSpace(line)) inputs.Add(line.Trim());
-            //    }
-            //}
-        } 
+                if (_dial == 0)
+                {
+                    _password += 1;
+                }
+            }
+        }
     }
 }

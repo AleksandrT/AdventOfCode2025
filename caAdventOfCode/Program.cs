@@ -8,7 +8,8 @@ do {
 
     WriteLine("");
     WriteLine("Please select the day to run or select 'q' to exit.");
-    WriteLine("Enter 1 to run Day 1: Secret Entrance");
+    WriteLine("Enter 1 to run Day 1: Secret Entrance Part one");
+    WriteLine("Enter 2 to run Day 1: Secret Entrance Part two");
     WriteLine("");
     WriteLine("");
     WriteLine("");
@@ -19,7 +20,11 @@ do {
     switch (userChoice.KeyChar)
     {
         case '1':
-            WriteLine("Day 1: Secret Entrance");
+            WriteLine("Day 1: Secret Entrance - part one");
+            new caAdventOfCode.Day1.SecretEntrancePartOne();
+            break;
+        case '2':
+            WriteLine("Day 1: Secret Entrance - part two");
             new caAdventOfCode.Day1.SecretEntrancePartOne();
             break;
         default:
