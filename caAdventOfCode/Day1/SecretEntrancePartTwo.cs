@@ -1,18 +1,17 @@
 ﻿namespace caAdventOfCode.Day1
 {
-    public class SecretEntrancePartOne
+    public class SecretEntrancePartTwo
     {
         private int _password;
         private int _dial = 50;
         private readonly List<string> _inputs = new List<string>();
         private bool useTestData = false;
-        public SecretEntrancePartOne()
+        public SecretEntrancePartTwo()
         {
             LoadData();
             CalculatePassword();
-            Console.WriteLine($"Password is: {_password}");
+            Console.WriteLine($"Password is {_password}");
         }
-
         private void LoadData()
         {
             if (useTestData)
@@ -26,8 +25,7 @@
                             L1
                             L99
                             R14
-                            L82
-                            R764";
+                            L82";
 
                 using (var reader = new StringReader(data))
                 {
@@ -68,32 +66,33 @@
 
         private void CalculatePassword()
         {
-            foreach (var input in _inputs)
+            foreach (var _input in _inputs)
             {
-                if (string.IsNullOrEmpty(input)) continue;
+                if (string.IsNullOrEmpty(_input)) continue;
 
-                var direction = input[0];
-                if (!int.TryParse(input.Substring(1), out var steps)) continue;
+                var _direction = _input[0];
+                if (!int.TryParse(_input.Substring(1), out var _steps)) continue;
 
-                if (direction == 'L')
-                {
-                    _dial -= steps;
-                }
-                else if (direction == 'R')
-                {
-                    _dial += steps;
-                }
-
-                if (_dial < 0)
-                {
-                    _dial += 10000;
-                }
-
-                _dial %= 100;
-
-                if (_dial == 0)
-                {
-                    _password += 1;
+                while (_steps > 0) 
+                { 
+                    if (_direction == 'L')
+                    {
+                        _dial--;
+                    }
+                    else if (_direction == 'R')
+                    {
+                        _dial++;
+                    }
+                    if (Math.Abs(_dial) == 100)
+                    {
+                        _dial = 0;
+                    }
+                    
+                    if (_dial == 0)
+                    {                        
+                        _password += 1;
+                    }                                       
+                    _steps--;
                 }
             }
         }

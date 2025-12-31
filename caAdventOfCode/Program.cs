@@ -20,12 +20,12 @@ do {
     switch (userChoice.KeyChar)
     {
         case '1':
-            WriteLine("Day 1: Secret Entrance - part one");
+            WriteLine("\nDay 1: Secret Entrance - part one");
             new caAdventOfCode.Day1.SecretEntrancePartOne();
             break;
         case '2':
-            WriteLine("Day 1: Secret Entrance - part two");
-            new caAdventOfCode.Day1.SecretEntrancePartOne();
+            WriteLine("\nDay 1: Secret Entrance - part two");
+            new caAdventOfCode.Day1.SecretEntrancePartTwo();
             break;
         default:
             break;
