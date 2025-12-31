@@ -45,7 +45,7 @@
 
             try
             {
-                var localPath = @"C:\Users\40124401\source\repos\AleksandrT\AdvemtOfCode2025\caAdventOfCode\Data\InputsDay1Part1.txt";
+                var localPath = @"C:\Users\40124401\source\repos\AleksandrT\AdvemtOfCode2025\caAdventOfCode\Data\InputsDay1.txt";
                 if (File.Exists(localPath))
                 {
                     foreach (var line in File.ReadAllLines(localPath))
