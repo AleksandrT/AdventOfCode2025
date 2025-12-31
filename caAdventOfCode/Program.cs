@@ -10,6 +10,7 @@ do {
     WriteLine("Please select the day to run or select 'q' to exit.");
     WriteLine("Enter 1 to run Day 1: Secret Entrance Part one");
     WriteLine("Enter 2 to run Day 1: Secret Entrance Part two");
+    WriteLine("Enter 3 to run Day 2: Gift shop");
     WriteLine("");
     WriteLine("");
     WriteLine("");
