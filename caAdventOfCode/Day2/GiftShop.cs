@@ -1,9 +1,12 @@
-﻿namespace caAdventOfCode.Day2
+﻿using System.Numerics;
+
+namespace caAdventOfCode.Day2
 {
     public class GiftShop
     {
         private int _invalidIDs;
         private bool useTestData = false;
+        private List<string> _inputs = new List<string>();
         public GiftShop()
         {
             LoadData();
@@ -13,79 +16,51 @@
 
         private void LoadData()
         {
+            var _data = System.String.Empty;
+
             if (useTestData)
             {
-                var data = @"11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
-                            1698522-1698528,446443-446449,38593856-38593862,565653-565659,
-                            824824821-824824827,2121212118-2121212124";
-
-                using (var reader = new StringReader(data))
+                _data = @"11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
+            }
+            else
+            {
+                try
                 {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
+                    var _dataSource = @"C:\Users\40124401\source\repos\AleksandrT\AdventOfCode2025\caAdventOfCode\Data\InputsDay2.txt";
+                    if (!File.Exists(_dataSource))
                     {
-                        if (!string.IsNullOrWhiteSpace(line))
-                        {
-                            //_inputs.Add(line.Trim());
-                        }
+                        Console.WriteLine("File not found!");
+                        return;
+                    }
+                    foreach (var line in File.ReadAllLines(_dataSource))
+                    {
+                            _data = (!string.IsNullOrWhiteSpace(line)) ? line.Trim() : String.Empty;                       
                     }
                 }
-                return;
-            }
-
-            try
-            {
-                var localPath = @"C:\Users\40124401\source\repos\AleksandrT\AdvemtOfCode2025\caAdventOfCode\Data\InputsDay1Part1.txt";
-                if (File.Exists(localPath))
+                catch
                 {
-                    foreach (var line in File.ReadAllLines(localPath))
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                        {
-                            //_inputs.Add(line.Trim());
-                        }
-                    }
-
-                    return;
+                    Console.WriteLine("File found, but wasn't able to read it!");
                 }
-                Console.WriteLine("File not found!");
             }
-            catch
-            {
-                Console.WriteLine("File found, but wasn't able to read it!");
-            }
+            _inputs = _data.Split(',').Select(s => s.Trim()).ToList();
         }
 
         private void CalculateInvalidIDs()
-        {
-            //foreach (var input in //_inputs)
-            //{
-            //    if (string.IsNullOrEmpty(input)) continue;
+        {            
+            foreach (var _input in _inputs)
+            {
+                string[] _parts = _input.Split('-');
+                BigInteger _partOne = BigInteger.Parse(_parts[0]);
+                BigInteger _partTwo = BigInteger.Parse(_parts[1]);
 
-            //    var direction = input[0];
-            //    if (!int.TryParse(input.Substring(1), out var steps)) continue;
-
-            //    if (direction == 'L')
-            //    {
-            //        _dial -= steps;
-            //    }
-            //    else if (direction == 'R')
-            //    {
-            //        _dial += steps;
-            //    }
-
-            //    if (_dial < 0)
-            //    {
-            //        _dial += 10000;
-            //    }
-
-            //    _dial %= 100;
-
-            //    if (_dial == 0)
-            //    {
-            //        _password += 1;
-            //    }
+                for (var n = _partOne; n <= _partTwo; n++)
+                {
+                    string val = n.ToString();
+                    int half = val.Length / 2;
+                    
+                    _invalidIDs += (val.Substring(0, half).Equals(val.Substring(half))) ? 1 : 0;                    
+                }
             }
-        
+        }
     }
 }

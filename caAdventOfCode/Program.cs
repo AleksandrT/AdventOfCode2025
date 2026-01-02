@@ -28,6 +28,11 @@ do {
             WriteLine("\nDay 1: Secret Entrance - part two");
             new caAdventOfCode.Day1.SecretEntrancePartTwo();
             break;
+        case '3':
+            WriteLine("\nDay 2: Gift shope - part one");
+            new caAdventOfCode.Day2.GiftShop();
+            break;
+
         default:
             break;
     }
