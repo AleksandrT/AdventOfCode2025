@@ -26,7 +26,7 @@ namespace caAdventOfCode.Day2
             {
                 try
                 {
-                    var _dataSource = @"C:\Users\40124401\source\repos\AleksandrT\AdventOfCode2025\caAdventOfCode\Data\InputsDay2.txt";
+                    var _dataSource = @"..\\..\\..\\Data\\InputsDay2.txt";
                     if (!File.Exists(_dataSource))
                     {
                         Console.WriteLine("File not found!");
