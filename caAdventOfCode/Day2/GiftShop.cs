@@ -4,7 +4,7 @@ namespace caAdventOfCode.Day2
 {
     public class GiftShop
     {
-        private int _invalidIDs;
+        private BigInteger _invalidIDs;
         private bool useTestData = false;
         private List<string> _inputs = new List<string>();
         public GiftShop()
@@ -26,7 +26,7 @@ namespace caAdventOfCode.Day2
             {
                 try
                 {
-                    var _dataSource = @"..\\..\\..\\Data\\InputsDay2.txt";
+                    var _dataSource = @"..\..\..\Data\InputsDay2.txt";
                     if (!File.Exists(_dataSource))
                     {
                         Console.WriteLine("File not found!");
@@ -58,7 +58,7 @@ namespace caAdventOfCode.Day2
                     string val = n.ToString();
                     int half = val.Length / 2;
                     
-                    _invalidIDs += (val.Substring(0, half).Equals(val.Substring(half))) ? 1 : 0;                    
+                    _invalidIDs += (val.Substring(0, half).Equals(val.Substring(half))) ? n : 0;                    
                 }
             }
         }
